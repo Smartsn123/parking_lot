@@ -23,6 +23,7 @@ class ParkingLot:
         self.available_lots = CustomHeap([item for k, item in self.lots.items()],
                                          'id',
                                          'distance')
+        self.cars_parked = {}
 
     def get_min_distance_lot(self):
         """
@@ -43,13 +44,30 @@ class ParkingLot:
         """
         self.available_lots.insert(self.lots[lot_id])
         car = self.lots[lot_id].empty()
+        self.cars_parked.pop(car.reg_no)
         return car
 
     def park_in_lot(self, lot_id, car):
         """
         function to park car in lot with given Lot id
         :param lot_id:  id of the lot that is to be marked empty
+        :param car: Car object for car to be parked
         :return: None
         Complexity : O(1)
         """
         self.lots[lot_id].park(car)
+        self.cars_parked[car.reg_no] = lot_id
+
+    def is_slot_available(self):
+        """
+        function to check if slot is available in parking lot
+        :return: boolean True or False
+        """
+        return len(self.available_lots) > 0
+
+    def get_slot(self, lot_id):
+        """
+        function to return status of slot
+        :return: slot object
+        """
+        return self.lots[lot_id]
