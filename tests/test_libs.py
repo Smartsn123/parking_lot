@@ -1,8 +1,8 @@
 import sys, os
 import unittest
 sys.path.append("{}/src/lib".format(os.getcwd()))
-sys.path.append("{}/src/models".format(os.getcwd()))
-from utils import customHeap
+from utils import CustomHeap
+
 
 class TestObj:
     def __init__(self, id, val):
@@ -14,21 +14,20 @@ class TestHeap(unittest.TestCase):
 
     def testInit(self):
         items = [TestObj(i, 10-i) for i in range(10) if i!=4]
-        heap = customHeap(items, 'id', 'val')
+        heap = CustomHeap(items, 'id', 'val')
         correct_answer = [(1, 9), (2, 8), (3, 7), (7, 3), (5, 5), (4, 6), (8, 2), (9, 1), (10, 0)]
         self.assertListEqual(heap.heap_list, correct_answer, "heap creation logic failed")
 
-
     def testInsert(self):
         items = [TestObj(i, 10 - i) for i in range(10) if i != 8]
-        heap = customHeap(items, 'id', 'val')
+        heap = CustomHeap(items, 'id', 'val')
         heap.insert(TestObj(8, 2))
         correct_answer = [(1, 9), (2, 8), (4, 6), (7, 3), (3, 7), (5, 5), (8, 2), (9, 1), (10, 0), (6, 4)]
         self.assertListEqual(heap.heap_list, correct_answer, "heap Insert logic test failed")
 
     def testExtractMin(self):
         items = [TestObj(i, 10 - i) for i in range(10) if i != 8]
-        heap = customHeap(items, 'id', 'val')
+        heap = CustomHeap(items, 'id', 'val')
         initial_len = len(heap.heap_list)
         mini_val, mini_id = heap.extractMin()
         match1 = (mini_id == 9 and mini_val == 1) and len(heap.heap_list) == initial_len-1
@@ -48,12 +47,28 @@ class TestHeap(unittest.TestCase):
 
     def testRemoveNode(self):
         items = [TestObj(i, 10 - i) for i in range(10) ]
-        heap = customHeap(items, 'id', 'val')
-        heap.remove_node(8)
+        heap = CustomHeap(items, 'id', 'val')
+        heap.removeNodeId(8)
         correct_answer = [(1, 9), (3, 7), (4, 6), (7, 3), (6, 4), (5, 5), (8, 2), (10, 0), (9, 1)]
         self.assertListEqual(heap.heap_list, correct_answer, "heap remove node failed")
 
-
+    def testNodeMap(self):
+        def check_correct_mapping(heap):
+            for id, node_ix in heap.node_map.items():
+                self.assertEqual(id, heap.heap_list[node_ix][1], "Node mapping is incorrect")
+        items = [TestObj(i, 10 - i) for i in range(10) if i != 8]
+        heap = CustomHeap(items, 'id', 'val')
+        check_correct_mapping(heap)
+        heap.extractMin()
+        check_correct_mapping(heap)
+        heap.extractMin()
+        check_correct_mapping(heap)
+        heap.extractMin()
+        check_correct_mapping(heap)
+        heap.insert(TestObj(8, 2))
+        check_correct_mapping(heap)
+        heap.extractMin()
+        check_correct_mapping(heap)
 
 
 if __name__ == '__main__':
