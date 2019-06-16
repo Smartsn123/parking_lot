@@ -1,5 +1,6 @@
 # ParkingLotApp
 
+
 An Automated ticketing system for parking Lot that allows customers to use my parking lot without human intervention.
 When a car enters a parking lot,  ticket issued to the driver. The
 ticket issuing process includes us documenting the registration number (number plate) and the colour of the car and allocating an available parking slot to the car
@@ -10,9 +11,13 @@ The customer is
 allocated a parking slot which is nearest to the entry. At the exit the customer returns
 the ticket which then marks the slot they were using as being available
 
+# Environment
+
+* version : 1.0
+* environment : Unix with python2.7
+
 ## Getting Started
 ### Project structure
-
 
 ```
 parking_lot/
