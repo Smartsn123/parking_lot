@@ -7,11 +7,11 @@ from test_libs import TestHeap
 from test_models import TestCar, TestLot, TestParkingLot
 
 
-class TestCar(unittest.TestCase):
+class TestMain(unittest.TestCase):
 
-    def testMain(self):
-        app = AppMain()
-        commands = [
+    def setUp(self):
+        self.app = AppMain()
+        self.commands = [
             "create_parking_lot 6\n",
             "park KA-01-HH-1234 White\n",
             "park KA-01-HH-9999 White\n",
@@ -28,7 +28,7 @@ class TestCar(unittest.TestCase):
             "slot_number_for_registration_number KA-01-HH-3141\n",
             "slot_number_for_registration_number MH-04-AY-1111\n"
         ]
-        results = [
+        self.results = [
             "Created a parking lot with 6 slots\n",
             "Allocated slot number: 1\n",
             "Allocated slot number: 2\n",
@@ -45,10 +45,18 @@ class TestCar(unittest.TestCase):
             "6\n",
             "Not found\n"
         ]
-        for ix, command in enumerate(commands):
-            result = app.execute(command)
-            self.assertEqual(result, results[ix])
+
+    def tearDown(self):
+        self.app = None
+        self.commands = None
+        self.results = None
+
+    def test_main(self):
+        for ix, command in enumerate(self.commands):
+            result = self.app.execute(command)
+            self.assertEqual(result, self.results[ix])
 
 
 if __name__ == "__main__":
+    print "Running Automated test cases for the App"
     unittest.main()

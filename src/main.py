@@ -126,7 +126,7 @@ class AppMain:
 
 if __name__ == "__main__":
     app = AppMain()
-    if len(sys.argv)>1:
+    if len(sys.argv)>1 and sys.argv[1]:
         input_file = sys.argv[1]
         commands = open(input_file,'r').read().split('\n')
         ix = 0

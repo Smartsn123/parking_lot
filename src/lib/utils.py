@@ -115,7 +115,6 @@ class CustomHeap:
         :param id: id of the item to be removed
         :return: None
         """
-        print(self.node_map)
         remove_ix = self.node_map[id]
         old_val = self.heap_list[remove_ix][0]
         new_val = self.heap_list[-1][0]

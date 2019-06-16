@@ -52,6 +52,7 @@ class TestHeap(unittest.TestCase):
         correct_answer = [(1, 9), (3, 7), (4, 6), (7, 3), (6, 4), (5, 5), (8, 2), (10, 0), (9, 1)]
         self.assertListEqual(heap.heap_list, correct_answer, "heap remove node failed")
 
+
     def testNodeMap(self):
         def check_correct_mapping(heap):
             for id, node_ix in heap.node_map.items():
@@ -69,6 +70,8 @@ class TestHeap(unittest.TestCase):
         check_correct_mapping(heap)
         heap.extract_min()
         check_correct_mapping(heap)
+
+
 
 
 if __name__ == '__main__':
