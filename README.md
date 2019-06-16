@@ -1,11 +1,12 @@
 # ParkingLotApp
 
 An Automated ticketing system for parking Lot that allows customers to use my parking lot without human intervention.
-When a car enters a parking lot, I want to have a ticket issued to the driver. The
-ticket issuing process includes us documenting the registration number (number
-plate) and the colour of the car and allocating an available parking slot to the car
-before actually handing over a ticket to the driver (we assume that our customers are
-nice enough to always park in the slots allocated to them). The customer should be
+When a car enters a parking lot,  ticket issued to the driver. The
+ticket issuing process includes us documenting the registration number (number plate) and the colour of the car and allocating an available parking slot to the car
+
+before actually handing over a ticket to the driver (we assume that our customers are nice enough to always park in the slots allocated to them).
+
+The customer is 
 allocated a parking slot which is nearest to the entry. At the exit the customer returns
 the ticket which then marks the slot they were using as being available
 
@@ -52,7 +53,16 @@ parking_lot/
     `-- test_models.py
 ```
 
-*
+* src directory contains the python source files containing:
+   * main.py : consolidated python execution  file
+   * lib: supporting library code : utils.py : code for custom heap class
+   * models : contains class definition for the Objects Car, Lot, ParkingLot
+
+* tests directory contains unit tests for models, lib and main App, all executable from test_main.py
+
+* bin directory has executables to setup and run the project
+
+* functional_spec contains files to support run functional test suit
 
 
 ### Installing
@@ -177,12 +187,6 @@ $ slot_numbers_for_cars_with_colour White
 > 1, 2
 ```
 
-* parking slot number of all cars of given colour
-```
-$ slot_numbers_for_cars_with_colour White
-> 1, 2
-```
-
 * slot number for the given car
 ```
 $slot_number_for_registration_number KA-01-HH-9999
@@ -193,14 +197,21 @@ $slot_number_for_registration_number KA-01-HH-9991
 > Not found
 ```
 
+## Code Time Complexity
+Assuming there are N parking lots,  big O Complexity for various operations are given.
+* create_parking_lot:  O(N) Time
+
+* park :  O(logN) time (searches nearest empty slot from availabe slot heap)
+* leave : O(longN) time (updation of availabe slots heap)
+* registration_numbers_for_cars_with_colour:  O(N) time
+* slot_numbers_for_cars_with_colour: O(N)
+* status :   takes O(N) Time
+* slot_number_for_registration_number : O(1)
 
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 
 
 ## Authors
 
-* **Sunny Singh** - *Initial work* - [Smartsn123](https://github.com/Smartsn123)
+* **Sunny Singh** - [Smartsn123](https://github.com/Smartsn123)
