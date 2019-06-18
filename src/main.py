@@ -33,7 +33,6 @@ class ParkingLotApp:
         else:
             return Results.Free_slot_failure.format(slot_id)
 
-
     def status(self):
         return_string = "Slot No.    Registration No    Colour\n"
         for slot in self.parking_lot.lots:
@@ -61,7 +60,6 @@ class ParkingLotApp:
             return str(self.parking_lot.cars_parked[reg_no])
         else:
             return Results.Not_found
-
 
 
 class AppMain:

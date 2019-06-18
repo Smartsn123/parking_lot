@@ -13,7 +13,7 @@ class TestObj:
 class TestHeap(unittest.TestCase):
 
     def test_init(self):
-        function_name = "CustomeHeap.init"
+        function_name = "CustomHeap.init"
         print("Running unittest cases for {}\n".format(function_name))
         items = [TestObj(i, 10-i) for i in range(10) if i!=4]
         heap = CustomHeap(items, 'id', 'val')
@@ -21,7 +21,7 @@ class TestHeap(unittest.TestCase):
         self.assertListEqual(heap.heap_list, correct_answer, "unittest for {} failed ".format(function_name))
 
     def test_insert(self):
-        function_name = "CustomeHeap.insert"
+        function_name = "CustomHeap.insert"
         print("Running unittest cases for {}\n".format(function_name))
         items = [TestObj(i, 10 - i) for i in range(10) if i != 8]
         heap = CustomHeap(items, 'id', 'val')
@@ -30,7 +30,7 @@ class TestHeap(unittest.TestCase):
         self.assertListEqual(heap.heap_list, correct_answer, "unittest for {} failed ".format(function_name))
 
     def test_extract_min(self):
-        function_name = "CustomeHeap.extract_min"
+        function_name = "CustomHeap.extract_min"
         print("Running unittest cases for {}\n".format(function_name))
         items = [TestObj(i, 10 - i) for i in range(10) if i != 8]
         heap = CustomHeap(items, 'id', 'val')
@@ -52,7 +52,7 @@ class TestHeap(unittest.TestCase):
         self.assertEqual(match4, True, "unittest for {} failed ".format(function_name))
 
     def test_remove_node_id(self):
-        function_name = "CustomeHeap.remove_node_id"
+        function_name = "CustomHeap.remove_node_id"
         print("Running unittest cases for {}\n".format(function_name))
         items = [TestObj(i, 10 - i) for i in range(10) ]
         heap = CustomHeap(items, 'id', 'val')
@@ -60,13 +60,14 @@ class TestHeap(unittest.TestCase):
         correct_answer = [(1, 9), (3, 7), (4, 6), (7, 3), (6, 4), (5, 5), (8, 2), (10, 0), (9, 1)]
         self.assertListEqual(heap.heap_list, correct_answer, "unittest for {} failed ".format(function_name))
 
-
     def test_node_map(self):
-        function_name = "CustomeHeap.node_map"
+        function_name = "CustomHeap.node_map"
         print("Running unittest cases for {}\n".format(function_name))
+
         def check_correct_mapping(heap):
-            for id, node_ix in heap.node_map.items():
-                self.assertEqual(id, heap.heap_list[node_ix][1],"unittest for {} failed ".format(function_name))
+            for idi, node_ix in heap.node_map.items():
+                self.assertEqual(idi, heap.heap_list[node_ix][1],"unittest for {} failed ".format(function_name))
+
         items = [TestObj(i, 10 - i) for i in range(10) if i != 8]
         heap = CustomHeap(items, 'id', 'val')
         check_correct_mapping(heap)
@@ -80,8 +81,6 @@ class TestHeap(unittest.TestCase):
         check_correct_mapping(heap)
         heap.extract_min()
         check_correct_mapping(heap)
-
-
 
 
 if __name__ == '__main__':

@@ -12,6 +12,7 @@ class Results(object):
     Create_parking_lot_success = "Created a parking lot with {} slots"
     Invalid_input = "Invalid input"
 
+
 class Commands(object):
     Create_parking_lot = "create_parking_lot"
     Park = "park"
