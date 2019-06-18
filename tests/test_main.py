@@ -2,12 +2,91 @@ import sys, os
 import unittest
 sys.path.append("{}/src".format(os.getcwd()))
 sys.path.append("{}/tests".format(os.getcwd()))
-from main import AppMain
+from main import AppMain, ParkingLotApp
 from test_libs import TestHeap
 from test_models import TestCar, TestLot, TestParkingLot
+from  CONSTANTS import Commands, Results
 
 
-class TestMain(unittest.TestCase):
+class TestParkingLotApp(unittest.TestCase):
+
+    def setUp(self):
+        self.parking_app = ParkingLotApp(9)
+        self.cars =[['KA-01-HH-1234' ,'White'],
+                    ['KA-01-HH-9999', 'White'],
+                    ['KA-01-BB-0001', 'Black'],
+                    ['KA-01-HH-7777', 'Red']]
+
+    def tearDown(self):
+        self.parking_app = None
+        self.cars = None
+
+    def reset_parking_lot(self):
+        self.tearDown()
+        self.setUp()
+        for car in self.cars:
+         self.parking_app.park_car(*car)
+
+    def test_constructor(self):
+        function_name = "ParkingLotApp.Constructor"
+        self.assertListEqual(list(self.parking_app.parking_lot.lots.keys()), [i for i in range(1,10)], "unittest for {} failed ".format(function_name))
+
+    def test_park_car(self):
+        function_name = "ParkingLotApp.park_car"
+        self.reset_parking_lot()
+        self.assertTrue(self.cars[0][0] in self.parking_app.parking_lot.cars_parked, "unittest for {} failed ".format(function_name))
+        self.assertTrue(self.cars[1][0] in self.parking_app.parking_lot.cars_parked, "unittest for {} failed ".format(function_name))
+        self.assertTrue(self.cars[2][0] in self.parking_app.parking_lot.cars_parked, "unittest for {} failed ".format(function_name))
+        self.assertTrue(self.cars[3][0] in self.parking_app.parking_lot.cars_parked, "unittest for {} failed ".format(function_name))
+        result = self.parking_app.park_car(*self.cars[2])
+        self.assertEqual(result, Results.Car_present_error ,"unittest for {} failed ".format(function_name))
+
+    def test_leave(self):
+        self.reset_parking_lot()
+        function_name = "ParkingLotApp.leave"
+        result = self.parking_app.leave(2)
+        self.assertEqual(result, Results.Free_slot_success.format(2), "unittest for {} failed ".format(function_name))
+        result = self.parking_app.leave(2)
+        self.assertEqual(result, Results.Free_slot_failure.format(2), "unittest for {} failed ".format(function_name))
+
+    def test_status(self):
+        self.reset_parking_lot()
+        function_name = "ParkingLotApp.status"
+        result = self.parking_app.status()
+        self.assertEqual(len(result.split('\n')), 6, "unittest for {} failed ".format(function_name))
+        self.parking_app.leave(1)
+        result = self.parking_app.status()
+        self.assertEqual(len(result.split('\n')), 5, "unittest for {} failed ".format(function_name))
+
+    def test_filter_cars_with_colour(self):
+        self.reset_parking_lot()
+        function_name = "ParkingLotApp.filter_cars_with_colour"
+        result = self.parking_app.filter_cars_with_colour("White")
+        self.assertEqual(len(result.split(',')), 2, "unittest for {} failed ".format(function_name))
+        self.assertEqual(result, "KA-01-HH-1234, KA-01-HH-9999".format(function_name))
+        result = self.parking_app.filter_cars_with_colour("Black")
+        self.assertEqual(len(result.split(',')), 1, "unittest for {} failed ".format(function_name))
+        self.assertEqual(result, "KA-01-BB-0001".format(function_name))
+        result = self.parking_app.filter_cars_with_colour("White", "slot_id")
+        self.assertEqual(len(result.split(',')), 2, "unittest for {} failed ".format(function_name))
+        self.assertEqual(result, "1, 2".format(function_name))
+        result = self.parking_app.filter_cars_with_colour("Black", "slot_id")
+        self.assertEqual(len(result.split(',')), 1, "unittest for {} failed ".format(function_name))
+        self.assertEqual(result, "3".format(function_name))
+
+    def test_slot_number_for_registration_number(self):
+        self.reset_parking_lot()
+        function_name = "ParkingLotApp.slot_number_for_registration_number"
+        slot_no = self.parking_app.slot_number_for_registration_number("KA-01-HH-1234")
+        self.assertEqual(slot_no, "1", "unittest for {} failed ".format(function_name))
+        slot_no = self.parking_app.slot_number_for_registration_number("KA-01-BB-0001")
+        self.assertEqual(slot_no, "3", "unittest for {} failed ".format(function_name))
+        result = self.parking_app.slot_number_for_registration_number("KA-01-BB-0011")
+        self.assertEqual(result, Results.Not_found, "unittest for {} failed ".format(function_name))
+
+
+
+class TestAppMain(unittest.TestCase):
 
     def setUp(self):
         self.app = AppMain()
@@ -54,7 +133,7 @@ class TestMain(unittest.TestCase):
     def test_main(self):
         for ix, command in enumerate(self.commands):
             result = self.app.execute(command)
-            self.assertEqual(result, self.results[ix])
+            self.assertEqual(result, self.results[ix], " unit test for AppMain Failed")
 
 
 if __name__ == "__main__":
