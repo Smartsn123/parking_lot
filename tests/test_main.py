@@ -2,6 +2,7 @@ import sys, os
 import unittest
 sys.path.append("{}/src".format(os.getcwd()))
 sys.path.append("{}/tests".format(os.getcwd()))
+sys.path.append("{}/src/lib".format(os.getcwd()))
 from main import AppMain, ParkingLotApp
 from test_libs import TestHeap
 from test_models import TestCar, TestLot, TestParkingLot

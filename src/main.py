@@ -2,6 +2,7 @@
 import sys, os
 sys.path.append("{}/src/models".format(os.getcwd()))
 sys.path.append("{}/src/".format(os.getcwd()))
+sys.path.append("{}/src/lib".format(os.getcwd()))
 from CONSTANTS import Commands, Results
 from car import Car
 from parking_lot import ParkingLot
