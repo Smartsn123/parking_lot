@@ -10,6 +10,7 @@ class TestCar(unittest.TestCase):
 
     def testCarInit(self):
         function_name = "Lot.__init__"
+        print("Running unittest cases for {}\n".format(function_name))
         car_reg_no = 'KA-01-BB-0001'
         car_color = 'White'
         new_car = Car(car_reg_no, car_color)
@@ -21,6 +22,7 @@ class TestLot(unittest.TestCase):
 
     def testLotInit(self):
         function_name = "Lot.__init__"
+        print("Running unittest cases for {}\n".format(function_name))
         lot_id = 1
         lot_distance = 5
         new_lot = Lot(lot_id, lot_distance)
@@ -31,6 +33,7 @@ class TestLot(unittest.TestCase):
 
     def testLotPark(self):
         function_name = "Lot.park"
+        print("Running unittest cases for {}\n".format(function_name))
         lot_id = 1
         lot_distance = 5
         new_lot = Lot(lot_id, lot_distance)
@@ -46,6 +49,7 @@ class TestLot(unittest.TestCase):
 
     def testLotEmpty(self):
         function_name = "Lot.available"
+        print("Running unittest cases for {}\n".format(function_name))
         lot_id = 1
         lot_distance = 5
         new_lot = Lot(lot_id, lot_distance)
@@ -66,6 +70,7 @@ class TestParkingLot(unittest.TestCase):
         lots = 6
         my_parking = ParkingLot(lots)
         function_name = "ParkingLot.__init__"
+        print("Running unittest cases for {}\n".format(function_name))
         self.assertEqual(len(my_parking.lots.keys()), lots,  "unittest for {} failed ".format(function_name))
         self.assertEqual(len(my_parking.available_lots), lots, "unittest for {} failed ".format(function_name))
 
@@ -74,6 +79,7 @@ class TestParkingLot(unittest.TestCase):
         my_parking = ParkingLot(lots)
         lot_id = my_parking.get_min_distance_lot()
         function_name = "ParkingLot.park_in_lot"
+        print("Running unittest cases for {}\n".format(function_name))
         self.assertEqual(lot_id, 1,"unittest for {} failed ".format(function_name))
         my_parking.park_in_lot(lot_id, Car('KA-01-BB-0001', 'White'))
         self.assertEqual(my_parking.lots[lot_id].available, False, "unittest for {} failed ".format(function_name))
@@ -85,6 +91,7 @@ class TestParkingLot(unittest.TestCase):
     def testEmptyLot(self):
         lots = 6
         function_name = "ParkingLot.empty_lot"
+        print("Running unittest cases for {}\n".format(function_name))
         my_parking = ParkingLot(lots)
         lot_id1 = my_parking.get_min_distance_lot()
         my_parking.park_in_lot(lot_id1, Car('KA-01-BB-0001', 'White'))
@@ -101,6 +108,7 @@ class TestParkingLot(unittest.TestCase):
     def testMinDistanceLot(self):
         lots = 9
         function_name = "ParkingLot.get_minimum_distance_lot"
+        print("Running unittest cases for {}\n".format(function_name))
         my_parking = ParkingLot(lots)
         lot_id1 = my_parking.get_min_distance_lot()
         self.assertEqual(lot_id1, 1, "unittest for {} failed ".format(function_name))

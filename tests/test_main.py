@@ -29,10 +29,12 @@ class TestParkingLotApp(unittest.TestCase):
 
     def test_constructor(self):
         function_name = "ParkingLotApp.Constructor"
+        print ("Running unittest cases for {}\n".format(function_name))
         self.assertListEqual(list(self.parking_app.parking_lot.lots.keys()), [i for i in range(1,10)], "unittest for {} failed ".format(function_name))
 
     def test_park_car(self):
         function_name = "ParkingLotApp.park_car"
+        print("Running unittest cases for {}\n".format(function_name))
         self.reset_parking_lot()
         self.assertTrue(self.cars[0][0] in self.parking_app.parking_lot.cars_parked, "unittest for {} failed ".format(function_name))
         self.assertTrue(self.cars[1][0] in self.parking_app.parking_lot.cars_parked, "unittest for {} failed ".format(function_name))
@@ -44,6 +46,7 @@ class TestParkingLotApp(unittest.TestCase):
     def test_leave(self):
         self.reset_parking_lot()
         function_name = "ParkingLotApp.leave"
+        print("Running unittest cases for {}\n".format(function_name))
         result = self.parking_app.leave(2)
         self.assertEqual(result, Results.Free_slot_success.format(2), "unittest for {} failed ".format(function_name))
         result = self.parking_app.leave(2)
@@ -52,6 +55,7 @@ class TestParkingLotApp(unittest.TestCase):
     def test_status(self):
         self.reset_parking_lot()
         function_name = "ParkingLotApp.status"
+        print("Running unittest cases for {}\n".format(function_name))
         result = self.parking_app.status()
         self.assertEqual(len(result.split('\n')), 6, "unittest for {} failed ".format(function_name))
         self.parking_app.leave(1)
@@ -61,6 +65,7 @@ class TestParkingLotApp(unittest.TestCase):
     def test_filter_cars_with_colour(self):
         self.reset_parking_lot()
         function_name = "ParkingLotApp.filter_cars_with_colour"
+        print("Running unittest cases for {}\n".format(function_name))
         result = self.parking_app.filter_cars_with_colour("White")
         self.assertEqual(len(result.split(',')), 2, "unittest for {} failed ".format(function_name))
         self.assertEqual(result, "KA-01-HH-1234, KA-01-HH-9999".format(function_name))
@@ -77,6 +82,7 @@ class TestParkingLotApp(unittest.TestCase):
     def test_slot_number_for_registration_number(self):
         self.reset_parking_lot()
         function_name = "ParkingLotApp.slot_number_for_registration_number"
+        print("Running unittest cases for {}\n".format(function_name))
         slot_no = self.parking_app.slot_number_for_registration_number("KA-01-HH-1234")
         self.assertEqual(slot_no, "1", "unittest for {} failed ".format(function_name))
         slot_no = self.parking_app.slot_number_for_registration_number("KA-01-BB-0001")
@@ -131,6 +137,7 @@ class TestAppMain(unittest.TestCase):
         self.results = None
 
     def test_main(self):
+        print("Running all AppMain unittest cases for {}\n")
         for ix, command in enumerate(self.commands):
             result = self.app.execute(command)
             self.assertEqual(result, self.results[ix], " unit test for AppMain Failed")
